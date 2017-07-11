@@ -1,0 +1,12 @@
+rootProject.name = 'app'
+
+def includeIfPossible = { locationVar ->
+    try { includeBuild this."$locationVar" }
+    catch (MissingPropertyException e) {
+        println ":$locationVar NO-SOURCE, will use repository"
+    }
+}
+
+// run with '-Plib=../lib'
+includeIfPossible 'lib'
+

@@ -1,0 +1,40 @@
+project.group = 'org.example.sol'
+
+apply plugin: 'java'
+
+sourceCompatibility = '1.8'
+
+repositories {
+}
+
+dependencies {
+}
+
+ext.nexusReleases  = "https://nexus.../content/repositories/releases"
+
+apply plugin: 'maven-publish'
+
+task sourceJar(type: Jar, dependsOn: classes) {
+    classifier 'sources'
+    from sourceSets.main.allJava
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourceJar
+        }
+    }
+
+    repositories {
+        maven {
+            url nexusReleases
+
+            credentials {
+                username 'user'
+                password 'pass'
+            }
+        }
+    }
+}
